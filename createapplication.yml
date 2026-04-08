@@ -4,14 +4,14 @@ metadata:
   name: demo
   namespace: argocd
 spec:
-  project: default
+  project: demo
   source:
-    repoURL: https://github.com/suman-kumarsahusu/kubernetes-persneal.git
+    repoURL: https://github.com/suman-kumarsahusu/argocd-in.git
     targetRevision: main
-    path: deployement_strategy/canary
+    path: demoapp
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: devops
   syncPolicy:
     automated:
       prune: true
