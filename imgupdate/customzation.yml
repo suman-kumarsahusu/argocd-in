@@ -1,6 +1,7 @@
 kind: Kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
-metadata:
-  namespace: argocd
 resourses:
   - app.yml
+images:
+  - name: sumansahudockerhub/online
+    newTag: v1.0.0
