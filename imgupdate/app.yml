@@ -12,7 +12,7 @@ spec:
   project: default
   source:
       repoURL: https://github.com/suman-kumarsahusu/argocd-in.git
-      targetRevision: HEAD
+      targetRevision: main
       path: strategy
   destination:
       server: https://kubernetes.default.svc
