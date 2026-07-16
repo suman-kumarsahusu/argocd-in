@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - sumansahudockerhub/online:v1.0.2
+  - sumansahudockerhub/online:v1.0.1
