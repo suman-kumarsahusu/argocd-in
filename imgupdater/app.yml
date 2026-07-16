@@ -1,0 +1,22 @@
+kind: Application
+apiVersion: argoproj.io/v1alpha1
+metadata:
+    name: imgupadater
+    namespace: argocd
+    annotations:
+        argocd-image-updater.argoproj.io/image-list: image=sumansahudockerhub/online 
+        argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/secret 
+        argocd-image-updater.argoproj.io/image.update-strategy: semver
+spec:
+  project: default
+  source:
+   repoURL: https://github.com/suman-kumarsahusu/argocd-in.git
+   targetRevision: main
+   path: strategy
+  destination:
+   server: https://kubernetes.default.svc
+   namespace: default
+  syncPolicy: 
+    automated:
+     selfHeal: true
+     prune: true

@@ -1,0 +1,21 @@
+kind: Application
+apiVersion: argoproj.io/v1alpha1
+metadata:
+  name: strategy
+  namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-health-degraded.email: "sumansahu1425@gmail.com"
+    notifications.argoproj.io/subscribe.on-deployed.email: "sumansahu1425@gmail.com"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/suman-kumarsahusu/argocd-in.git
+    targetRevision: main
+    path: strategy
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
