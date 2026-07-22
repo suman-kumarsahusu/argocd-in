@@ -1,0 +1,27 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: active
+  namespace: argocd
+spec:
+  selector:
+    app: blue-green
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  type: ClusterIP
+---  
+kind: Service
+apiVersion: v1
+metadata:
+  name: preview
+  namespace: argocd
+spec:
+  selector:
+    app: blue-green
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  type: ClusterIP    

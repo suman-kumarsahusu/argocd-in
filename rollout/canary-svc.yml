@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: canary-svc
+  namespace: argocd
+spec:
+ selector:
+  app: canaryroll
+ ports:
+ - port: 80
+   targetPort: 80
+   protocol: TCP
+ type: ClusterIP  
+     
+

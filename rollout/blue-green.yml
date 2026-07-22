@@ -1,0 +1,26 @@
+kind: Rollout
+apiVersion: argoproj.io/v1alpha1
+metadata:
+  name: blue-green
+  namespace: argocd
+spec:
+ selector:
+   matchLabels:
+    app: blue-green
+ strategy:
+  blueGreen:
+    activeService: active
+    previewService: preview
+    autoPromotionEnabled: false    
+ replicas: 2
+ template:
+   metadata:
+     labels:
+       app: blue-green
+   spec:
+     containers:
+       - name: blue-green
+         image: nginx:1.19
+         ports:
+          - containerPort: 80    
+
