@@ -1,0 +1,17 @@
+kind: WorkflowTemplate
+apiVersion: argoproj.io/v1alpha1
+metadata:
+  name: template
+  namespace: argo
+spec:
+  entrypoint: defaulttemplate
+  templates:
+  - name: defaulttemplate
+    inputs:
+        parameters:
+          - name: who
+            default: "world"
+    container:
+        image: alpine:3.16
+        command: [sh,-c]
+        args: ["echo hello {{inputs.parameters.who}}"]      

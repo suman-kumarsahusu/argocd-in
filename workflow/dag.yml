@@ -1,0 +1,41 @@
+kind: Workflow
+apiVersion: argoproj.io/v1alpha1
+metadata:
+  generateName: dag
+  namespace: argo
+spec:
+ entrypoint: pipelinedag
+ templates:
+     - name: pipelinedag
+       dag:
+        tasks:
+          - name: step1
+            template: step
+            arguments:
+              parameters: [{name: msg,value: "hello"}]
+          - name: step2
+            dependencies: [step1]
+            template: step
+            arguments:
+             parameters:
+               - name: msg
+                 value: "{{tasks.step1.outputs.parameters.result}}"
+                 
+     - name: step
+       inputs:
+         parameters:
+           - name: msg
+       container:
+        image: alpine:3.16
+        command: [sh,-c]
+        args: 
+        - | 
+          echo "task got: {{inputs.parameters.msg}}"
+          echo "{{inputs.parameters.msg}} world"> /tmp/output
+       outputs:
+         parameters:
+           - name: result
+             valueFrom:
+               path: /tmp/output
+                    
+

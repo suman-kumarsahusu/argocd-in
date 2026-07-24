@@ -1,0 +1,35 @@
+kind: Workflow
+apiVersion: argoproj.io/v1alpha1
+metadata:
+ generateName: hello-world
+ namespace: argo 
+spec:
+  entrypoint: hello
+  templates:
+    - name: hello
+      steps:
+        - - name: generate
+            template: gen-msg
+        - - name: print
+            template: print-msg
+            arguments:
+              parameters:
+               - name: msg
+                 value: "{{steps.generate.outputs.result}}"
+    
+    - name: gen-msg
+      script:
+        image: python:3.9
+        command: ["python"]
+        source: |
+           print("hii argo")
+
+    - name: print-msg
+      inputs:
+        parameters:
+        - name: msg
+      container:
+         image: alpine:3.16
+         command: [sh , -c ]
+         args: ["echo -----receive:{{inputs.parameters.msg}}..."]
+  

@@ -1,0 +1,32 @@
+kind: Workflow
+apiVersion: argoproj.io/v1alpha1
+metadata:
+  generateName: cicd
+  namespace: argo
+spec:
+  entrypoint: cicd
+  templates:
+    - name: cicd
+      steps:
+      -  - name: build
+           template: build-step
+      -  - name: test
+           template: test-step
+      -  - name: deploy
+           template: deploy-step
+
+    - name: build-step
+      container:
+         image: alpine:3.16
+         command: [sh , -c]
+         args: ["echo ** build now ..."]
+    - name: test-step
+      container:
+         image: alpine:3.16
+         command: [sh , -c ]
+         args: ["echo -----test...."]
+    - name: deploy-step
+      container:
+        image: alpine:3.16
+        command: [sh, -c]
+        args: ["echo //////deploy........"]    

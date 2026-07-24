@@ -1,0 +1,16 @@
+kind: CronWorkflow
+apiVersion: argoproj.io/v1alpha1
+metadata:
+  name: cronworkflow
+  namespace: argo
+spec:
+ schedule: "* * * * *"
+ timezone: "Asia/Kolkata"
+ workflowSpec:
+   entrypoint: workflow
+   templates:
+       - name: workflow
+         container:
+           image: alpine:latest
+           command: [echo]
+           args: ["hello devops workfloe"]
