@@ -1,0 +1,38 @@
+kind: Sensor
+apiVersion: argoproj.io/v1alpha1
+metadata:
+  name: sencer
+  namespace: argo
+spec:
+ template:
+  serviceAccountName: sencer
+ dependencies:
+   - name: test-dep
+     eventSourceName: source   
+     eventName: example
+ triggers:
+    - template:
+        name: trigger
+        k8s:
+         operation: create
+         source:
+          resource:
+           kind: Workflow
+           apiVersion: argoproj.io/v1alpha1
+           metadata:
+            generateName: webhook
+           spec:
+             entrypoint: main
+             arguments:
+               parameters:
+               - name: message
+                 value: hello world
+             templates:  
+             - name: main
+               inputs:
+                 parameters:
+                 - name: message
+               container:
+                 image: alpine:3.16
+                 command: ["sh", "-c"]
+                 args: ["echo \"{{inputs.parameters.message}}\"; sleep 1"]           

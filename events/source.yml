@@ -1,0 +1,20 @@
+kind: EventSource
+apiVersion: argoproj.io/v1alpha1
+metadata:
+  name: source
+  namespace: argo
+spec:
+ service:
+  ports:
+   - port: 12000
+     targetPort: 12000
+ metadata:
+   labels:
+     foo: bar
+   annotations:
+     foo: bar
+ webhook:
+    example:
+      port: "12000"
+      endpoint: /example
+      method: POST   
